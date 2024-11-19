@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Laptop Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+      }
+      .tabs {
+        display: flex;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+      .tab {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        margin-right: 5px;
+      }
+      .tab:hover {
+        background-color: #ddd;
+      }
+      .tab.active {
+        background-color: #4caf50;
+        color: white;
+        border-bottom: none;
+      }
+      .tab-content {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-top: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      .form-group button {
+        padding: 10px 15px;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+      .form-group button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Laptop Management</h1>
+
+      <!-- Tab buttons -->
+      <div class="tabs">
+        <div class="tab active" onclick="openTab('addLaptopTab')">
+          Add Laptop
+        </div>
+        <div class="tab" onclick="openTab('updateLaptopTab')">
+          Update Laptop
+        </div>
+        <div class="tab" onclick="openTab('deleteLaptopTab')">
+          Delete Laptop
+        </div>
+        <div class="tab" onclick="openTab('allLaptopsTab')">All Laptops</div>
+      </div>
+
+      <!-- Add Laptop -->
+      <div id="addLaptopTab" class="tab-content active">
+        <h2>Add Laptop</h2>
+        <div class="form-group">
+          <label for="addLaptopName">Laptop Name:</label>
+          <input
+            type="text"
+            id="addLaptopName"
+            placeholder="Enter Laptop Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="addTrademark">Trademark:</label>
+          <input type="text" id="addTrademark" placeholder="Enter Trademark" />
+        </div>
+        <div class="form-group">
+          <label for="addMemory">Memory:</label>
+          <input type="text" id="addMemory" placeholder="Enter Memory" />
+        </div>
+        <div class="form-group">
+          <label for="addRAM">RAM:</label>
+          <input type="text" id="addRAM" placeholder="Enter RAM" />
+        </div>
+        <div class="form-group">
+          <label for="addPrice">Price:</label>
+          <input type="number" id="addPrice" placeholder="Enter Price" />
+        </div>
+        <div class="form-group">
+          <label for="addChip">Chip:</label>
+          <input type="text" id="addChip" placeholder="Enter Chip" />
+        </div>
+        <div class="form-group">
+          <button onclick="addLaptop()">Add Laptop</button>
+        </div>
+      </div>
+
+      <!-- Update Laptop -->
+      <div id="updateLaptopTab" class="tab-content">
+        <h2>Update Laptop</h2>
+        <div class="form-group">
+          <label for="updateID">ID:</label>
+          <input type="number" id="updateID" placeholder="Enter Laptop ID" />
+        </div>
+        <div class="form-group">
+          <label for="updateLaptopName">Laptop Name:</label>
+          <input
+            type="text"
+            id="updateLaptopName"
+            placeholder="Enter Laptop Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="updateTrademark">Trademark:</label>
+          <input
+            type="text"
+            id="updateTrademark"
+            placeholder="Enter Trademark"
+          />
+        </div>
+        <div class="form-group">
+          <label for="updateMemory">Memory:</label>
+          <input type="text" id="updateMemory" placeholder="Enter Memory" />
+        </div>
+        <div class="form-group">
+          <label for="updateRAM">RAM:</label>
+          <input type="text" id="updateRAM" placeholder="Enter RAM" />
+        </div>
+        <div class="form-group">
+          <label for="updatePrice">Price:</label>
+          <input type="number" id="updatePrice" placeholder="Enter Price" />
+        </div>
+        <div class="form-group">
+          <label for="updateChip">Chip:</label>
+          <input type="text" id="updateChip" placeholder="Enter Chip" />
+        </div>
+        <div class="form-group">
+          <button onclick="updateLaptop()">Update Laptop</button>
+        </div>
+      </div>
+
+      <!-- Delete Laptop -->
+      <div id="deleteLaptopTab" class="tab-content">
+        <h2>Delete Laptop</h2>
+        <div class="form-group">
+          <label for="deleteID">ID:</label>
+          <input type="number" id="deleteID" placeholder="Enter Laptop ID" />
+        </div>
+        <div class="form-group">
+          <button onclick="deleteLaptop()">Delete Laptop</button>
+        </div>
+      </div>
+
+      <!-- All Laptops -->
+      <div id="allLaptopsTab" class="tab-content">
+        <h2>All Laptops</h2>
+        <table id="laptopTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Laptop Name</th>
+              <th>Trademark</th>
+              <th>Memory</th>
+              <th>RAM</th>
+              <th>Price</th>
+              <th>Chip</th>
+            </tr>
+          </thead>
+          <tbody id="laptopTableBody">
+            <!-- Rows will be populated here by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      function openTab(tabId) {
+        const tabs = document.querySelectorAll(".tab-content");
+        const tabButtons = document.querySelectorAll(".tab");
+
+        tabs.forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        tabButtons.forEach((tabButton) => {
+          tabButton.classList.remove("active");
+        });
+
+        document.getElementById(tabId).classList.add("active");
+        document
+          .querySelector(`.tab[onclick="openTab('${tabId}')"]`)
+          .classList.add("active");
+      }
+
+      const apiUrl = "http://localhost:8080/laptop";
+
+      function fetchLaptops() {
+        fetch(`${apiUrl}/getAll`)
+          .then((response) => response.json())
+          .then((data) => {
+            const tableBody = document.getElementById("laptopTableBody");
+            tableBody.innerHTML = "";
+            data.forEach((laptop) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                            <td>${laptop.id}</td>
+                            <td>${laptop.laptopName}</td>
+                            <td>${laptop.trademark}</td>
+                            <td>${
+                              laptop.parameter ? laptop.parameter.memory : "N/A"
+                            }</td>
+                            <td>${
+                              laptop.parameter ? laptop.parameter.ram : "N/A"
+                            }</td>
+                            <td>${
+                              laptop.parameter ? laptop.parameter.price : "N/A"
+                            }</td>
+                            <td>${
+                              laptop.parameter ? laptop.parameter.chip : "N/A"
+                            }</td>
+                        `;
+              tableBody.appendChild(row);
+            });
+          })
+          .catch((error) =>
+            console.error("Error fetching laptop data:", error)
+          );
+      }
+
+      function addLaptop() {
+        const laptop = {
+          laptopName: document.getElementById("addLaptopName").value,
+          trademark: document.getElementById("addTrademark").value,
+          parameter: {
+            memory: document.getElementById("addMemory").value,
+            ram: document.getElementById("addRAM").value,
+            price: parseFloat(document.getElementById("addPrice").value),
+            chip: document.getElementById("addChip").value,
+          },
+        };
+
+        fetch(`${apiUrl}/add`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(laptop),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Laptop added:", data);
+            fetchLaptops();
+          })
+          .catch((error) => console.error("Error adding laptop:", error));
+      }
+
+      function updateLaptop() {
+        const laptopId = document.getElementById("updateID").value;
+        const laptop = {
+          laptopName: document.getElementById("updateLaptopName").value,
+          trademark: document.getElementById("updateTrademark").value,
+          parameter: {
+            memory: document.getElementById("updateMemory").value,
+            ram: document.getElementById("updateRAM").value,
+            price: parseFloat(document.getElementById("updatePrice").value),
+            chip: document.getElementById("updateChip").value,
+          },
+        };
+
+        fetch(`${apiUrl}/update/${laptopId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(laptop),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Laptop updated:", data);
+            fetchLaptops();
+          })
+          .catch((error) => console.error("Error updating laptop:", error));
+      }
+
+      function deleteLaptop() {
+        const laptopId = document.getElementById("deleteID").value;
+
+        fetch(`${apiUrl}/delete/${laptopId}`, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Laptop deleted:", data);
+            fetchLaptops();
+          })
+          .catch((error) => console.error("Error deleting laptop:", error));
+      }
+
+      // Fetch laptops when the page loads
+      document.addEventListener("DOMContentLoaded", fetchLaptops);
+    </script>
+  </body>
+</html>
